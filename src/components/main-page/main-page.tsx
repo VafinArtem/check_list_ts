@@ -2,15 +2,16 @@ import React from "react";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import Top from "../top/top";
-import Complete from "../complete/complete";
-import List from "../list/list";
+import {selectCompliteCards, selectNotCompliteCards} from "../../store/selectors/selectors";
 import {ListType} from "../../constants/constants";
+import List from "../list/list";
 import {useAppSelector} from "../../hooks";
+import Complete from "../complete/complete";
 
 function MainPage(): JSX.Element {
-  const {cards} = useAppSelector(({data}) => data);
-  const completeCards = cards.filter((card) => card.isComplete);
-  const processCards = cards.filter((card) => !card.isComplete);
+  const {cards} = useAppSelector((state) => state.data);
+  const completeCards = useAppSelector(selectCompliteCards);
+  const processCards = useAppSelector(selectNotCompliteCards);
 
   return (
     <React.Fragment>
