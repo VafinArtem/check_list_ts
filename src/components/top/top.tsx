@@ -65,7 +65,7 @@ const Top = function (): JSX.Element {
             <span className="button__text">Проект</span>
           </button>
           <form action="/" className="add-items__input-box input-box">
-            <input type="text" className="input-box__input" name="new_project" placeholder="Новый проект"/>
+            <input type="text" className="input-box__input" name="new_project" placeholder="Новый проект" />
             <button type="submit" className="input-box__confirm" aria-label="Подтвердить"></button>
           </form>
         </div>
@@ -77,7 +77,7 @@ const Top = function (): JSX.Element {
             <span className="button__text">Категория</span>
           </button>
           <form action="/" className="add-items__input-box input-box input-box--showed">
-            <input type="text" className="input-box__input" name="new_category" placeholder="Новая категория"/>
+            <input type="text" className="input-box__input" name="new_category" placeholder="Новая категория" />
             <button type="submit" className="input-box__confirm" aria-label="Подтвердить"></button>
           </form>
         </div>
@@ -93,7 +93,7 @@ const Top = function (): JSX.Element {
         </div>
       </section>
     </header>
-  )
-}
+  );
+};
 
 export default Top;
