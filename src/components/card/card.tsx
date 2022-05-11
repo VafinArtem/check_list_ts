@@ -1,8 +1,12 @@
 import React from "react";
 import {CardProps} from "./card.props";
 import classNames from "classnames";
+import {useAppDispatch} from "../../hooks";
+import {setCompleteStatus} from "../../store/actions/actions";
 
 const Card = function ({id, text, isComplete}: CardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <li className={classNames(`checklist__item`, {
       [`checklist__item--complete`]: isComplete,
@@ -16,10 +20,12 @@ const Card = function ({id, text, isComplete}: CardProps): JSX.Element {
         </div>
         <label className="checklist__box">
           <input type="checkbox" name={`check-${id}`} className="checklist__checkbox visually-hidden"
-                 defaultChecked={isComplete}/>
+            defaultChecked={isComplete} onClick={(evt) => {
+            evt.preventDefault();
+            dispatch(setCompleteStatus(id, !isComplete));
+          }} />
           <span className="checklist__check-box"></span>
-          <span className="checklist__name">{text}
-          </span>
+          <span className="checklist__name">{text}</span>
         </label>
       </div>
     </li>
