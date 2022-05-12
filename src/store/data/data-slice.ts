@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from "../../constants/constants";
 import {cardsMock} from "../../mocks/mocks";
 import {CardType, DataStateType} from "../../types/store";
-import {editTextCard, setCompleteStatus} from "../actions/actions";
+import {editTextCard, removeCard, setCompleteStatus} from "../actions/actions";
 
 const initialState: DataStateType = {
   cards: cardsMock,
@@ -30,6 +30,10 @@ export const DataSlice = createSlice({
         state.cards[currentIndexCard],
         {text: action.payload.updatedText}
       );
+    });
+    builder.addCase(removeCard, (state, action) => {
+      const currentIndexCard = findCardIndex(state.cards, action.payload.id);
+      state.cards.splice(currentIndexCard, 1);
     });
   }
 });
