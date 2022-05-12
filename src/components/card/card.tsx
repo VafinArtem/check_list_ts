@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {CardProps} from "./card.props";
 import classNames from "classnames";
 import {useAppDispatch} from "../../hooks";
@@ -8,6 +8,7 @@ import CardControls from "../card-controls/card-controls";
 const Card = function ({id, text, isComplete}: CardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const spanRef = useRef<HTMLSpanElement>(null);
   const [updatedText, setUpdatedText] = useState(text);
   const [editCard, setEditCard] = useState(false);
 
@@ -23,10 +24,17 @@ const Card = function ({id, text, isComplete}: CardProps): JSX.Element {
           <input type="checkbox" name={`check-${id}`} className="checklist__checkbox visually-hidden"
             defaultChecked={isComplete} onClick={(evt) => {
             evt.preventDefault();
-            dispatch(setCompleteStatus(id, !isComplete));
+            if (!editCard) {
+              dispatch(setCompleteStatus(id, !isComplete));
+            } else {
+              spanRef.current?.focus();
+            }
           }} />
-          <span className="checklist__check-box"></span>
-          <span className="checklist__name">{text}</span>
+          <span ref={spanRef} className={classNames(`checklist__name`, {
+            [`checklist__name--edit`]: editCard
+          })} contentEditable={editCard} suppressContentEditableWarning={true}
+            tabIndex={editCard ? 0 : undefined}
+            onInput={() => setUpdatedText(spanRef.current?.textContent ?? text)}>{text}</span>
         </label>
       </div>
     </li>
